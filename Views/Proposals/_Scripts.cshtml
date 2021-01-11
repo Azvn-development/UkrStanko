@@ -1,0 +1,7 @@
+﻿<script>
+    $.validator.unobtrusive.parse('.form');
+
+    $("#ConnectionId").val(sessionStorage.getItem("connectionId"));
+
+    downloadImages($("#downloadFilesDialog"), $("#ImagesInput"), $("#ImagesList"));
+</script>

@@ -1,0 +1,81 @@
+﻿@model UkrStanko.ViewModels.Requisitions.DetailsViewModel
+
+@{
+    ViewBag.Details = true;
+}
+
+<div class="panel">
+    @*Шапка диалога*@
+    <div class="panel-header">
+        <h2>Заявка</h2>
+
+        @if (User.Identity.Name == Model.Requisition.UserName || User.IsInRole("Администратор"))
+        {
+            <div class="btn-group">
+                <a onclick="goToUrl(window.location.href, '@Url.Action("Edit", new { id = Model.Requisition.Id })')">
+                    <i class="fa fa-pencil-square fa-2x icon-info"></i>
+                </a>
+                <i id="@Model.Requisition.Id" class="fa fa-minus-square fa-2x icon-cancel" onclick="{
+                    $('[name=\'dialog-delete-button\']').attr('id', $(this).attr('id'));
+                    $('[name=\'dialog-delete-button\']').attr('details', true);
+                    showDialog('#delete-dialog')}"></i>
+            </div>
+        } @* if *@
+    </div>
+
+    @*Тело диалога*@
+    <div class="panel-body">
+        <table class="details-table">
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Requisition.CreateDate)</th>
+                <td>@Model.Requisition.CreateDate.ToString("dd.MM.yyyy")</td>
+            </tr>
+
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Requisition.UserName)</th>
+                <td>@Model.Requisition.UserName</td>
+            </tr>
+
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Requisition.ContactName)</th>
+                <td>@Model.Requisition.ContactName</td>
+            </tr>
+
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Requisition.Location)</th>
+                <td>@Model.Requisition.Location</td>
+            </tr>
+
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Requisition.Phone)</th>
+                <td>@Model.Requisition.Phone</td>
+            </tr>
+
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Requisition.MachineId)</th>
+                <td>@Model.Requisition.Machine.Name</td>
+            </tr>
+
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Requisition.Comment)</th>
+                <td>@Model.Requisition.Comment</td>
+            </tr>
+        </table>
+
+        <h3>Предложения на заявку</h3>
+        @await Html.PartialAsync("~/Views/Proposals/_Table.cshtml", Model.Proposals)
+    </div>
+
+    @*Подвал диалога*@
+    <div class="panel-footer">
+        <a onclick="goHistoryBack(window.location.href)" class="btn btn-default">Назад</a>
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Views/Shared/Dialogs/_AjaxDeleteDialog.cshtml")
+
+<script>
+    $(window).scrollTop(0);
+
+    checkCurrentUrl('@Url.Action("Details")');
+</script>

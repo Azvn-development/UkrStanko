@@ -1,0 +1,22 @@
+﻿@import "variables.scss";
+
+/* СТИЛИЗАЦИЯ СООБЩЕНИЙ */
+.response {
+    padding: 5px 10px;
+    margin-bottom: 5px;
+    background: $light_blue_color;
+
+    .response-title,
+    .response-info,
+    .response-subject {
+        font-size: 12px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .response-title,
+    .response-subject {
+        font-weight: bold;
+    }
+}

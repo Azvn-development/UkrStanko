@@ -1,0 +1,190 @@
+﻿@import "variables.scss";
+
+/* СТИЛИЗАЦИЯ БЛОКА ТАБЛИЦ */
+.table {
+    width: 95%;
+    margin: 1vh auto;
+    border-collapse: collapse;
+
+    thead {
+        tr {
+            th {
+                text-align: center;
+                padding: 0.8vh 0.5vw;
+                color: $white_color;
+                background: $dark_grey_color;
+            }
+        }
+    }
+
+    tbody {
+        tr {
+            &:hover {
+                cursor: pointer;
+            }
+
+            &.active {
+                background: $light_blue_color;
+            }
+
+            &.repeated {
+                font-weight: bold;
+                color: $dark_red_color !important;
+            }
+
+            td {
+                border-top: 1px solid $aqua_color;
+                border-bottom: 1px solid $aqua_color;
+                padding: 0.8vh 1vw;
+
+                .user-img {
+                    width: 40px;
+                    min-width: 40px;
+                    height: 40px;
+                    min-height: 40px;
+                    margin: 0 auto;
+                    border: $dark_aqua_color 1px solid;
+                }
+
+                &.download-wheel {
+                    padding-top: 1.5vh;
+                    padding-bottom: 1.5vh;
+                    text-align: center;
+                    border-bottom: none;
+                    color: $dark_aqua_color;
+                    text-decoration: underline;
+                }
+
+                &.ellipsis {
+                    max-width: 100px;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                }
+
+                &.price {
+                    white-space: nowrap;
+                }
+            }
+        }
+    }
+}
+
+/* АДАПТАЦИЯ К ШИРИНЕ ЭКРАНА МЕНЕЕ 1000 PX */
+@media(max-width:$tablet_width) {
+    .table {
+        table-layout: fixed;
+        margin-top: 0;
+        /* Запрет отображения заголовка таблицы */
+        thead {
+            display: none;
+        }
+        /* Изменение позиционирования тела таблицы */
+        tbody {
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+
+            .user-row {
+                width: 15%;
+
+                td {
+                    text-align: center;
+
+                    i {
+                        display: block;
+                        text-align: center;
+                    }
+                }
+            }
+
+            .user-details-row {
+                width: 85%;
+            }
+
+            #downloadItemsContainer {
+                border-bottom: none;
+            }
+
+            tr {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: space-between;
+                width: 100%;
+                padding: 1vh 1vw;
+                border-bottom: 1px solid $aqua_color;
+
+                td {
+                    width: 100%;
+                    padding: 0;
+                    text-align: left;
+                    border: none;
+                    line-height: 1.45;
+
+                    &.title {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+
+                        &:before {
+                            content: attr(description);
+                            font-weight: bold;
+                            font-size: 16px;
+                            color: $dark_aqua_color;
+                        }
+                    }
+
+                    i {
+                        padding: 0.5vh 0.7vw;
+                        font-size: 30px !important;
+                    }
+
+                    &.ellipsis {
+                        max-width: unset;
+                        overflow: unset;
+                        white-space: normal;
+                        text-overflow: unset;
+                    }
+
+                    &.price {
+                        white-space: normal;
+                    }
+
+                    .user-img {
+                        width: 45px;
+                        min-width: 45px;
+                        height: 45px;
+                        min-height: 45px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* АДАПТАЦИЯ К ШИРИНЕ ЭКРАНА МЕНЕЕ 450 PX */
+@media(max-width:$mobile_width) {
+    .table {
+        /* Изменение позиционирования тела таблицы */
+        tbody {
+            .user-row {
+                width: 25%;
+            }
+
+            .user-details-row {
+                width: 75%;
+            }
+
+            tr {
+                td {
+                    &.title {
+                        &:before {
+                            font-size: 15px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

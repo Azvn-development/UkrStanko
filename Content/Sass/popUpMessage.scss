@@ -1,0 +1,42 @@
+﻿@import "variables.scss";
+
+/*Стилизация всплывающих сообщений*/
+.pop-up-message {
+    display: flex;
+    position: fixed;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    bottom: 0;
+    padding: 1vh 0.5vw;
+    font-weight: bold;
+    min-height: 4vh;
+
+    p {
+        padding-left: 1vw;
+    }
+
+    &.error {
+        background: $light_orange_color;
+
+
+        i, p {
+            color: $black_color;
+        }
+    }
+
+    &.success {
+        background: $green_color;
+
+        i, p {
+            color: $white_color;
+        }
+    }
+}
+
+/* АДАПТАЦИЯ К ШИРИНЕ ЭКРАНА МЕНЕЕ 450 PX */
+@media(max-width:$mobile_width) {
+    .pop-up-message {
+        min-height: 6vh;
+    }
+}

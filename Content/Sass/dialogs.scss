@@ -1,0 +1,78 @@
+﻿@import "variables.scss";
+
+/* СТИЛИЗАЦИЯ ДИАЛОГОВ */
+.dialog-modal {
+    position: fixed;
+    display: none;
+    justify-content: center;
+    padding-top: 20vh;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3));
+    z-index: 1001;
+
+    .dialog {
+        width: 50%;
+        height: fit-content;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        background: $white_color;
+        border: 1px solid $dark_aqua_color;
+        border-radius: 5px;
+        padding: 2vh 2vw;
+
+        .dialog-body,
+        .dialog-footer {
+            padding-top: 2vh;
+            border-top: 1px solid $dark_aqua_color;
+            margin-top: 2vh;
+        }
+
+        .dialog-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .dialog-body {
+            line-height: 1.5;
+            padding-left: 1vw;
+            padding-right: 1vw;
+
+            .form-label {
+                display: inline-flex !important;
+                width: 50%;
+            }
+
+            .form-input {
+                width: 50%;
+            }
+        }
+
+        .dialog-footer {
+            text-align: right;
+        }
+    }
+}
+
+/* АДАПТАЦИЯ К ШИРИНЕ ЭКРАНА МЕНЕЕ 1000 PX */
+@media(max-width:$tablet_width) {
+    .dialog-modal {
+        .dialog {
+            width: 90%;
+
+            .dialog-body {
+                .form-label {
+                    width: 40%;
+                }
+
+                .form-input {
+                    width: 60%;
+                }
+            }
+        }
+    }
+}

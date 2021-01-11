@@ -1,0 +1,153 @@
+﻿@import "variables.scss";
+
+/* ШРИФТЫ САЙТА */
+@font-face {
+    font-family: OpenSans;
+    src: url("../fonts/OpenSans/Regular/OpenSans-Regular.eot");
+    src: url("../fonts/OpenSans/Regular/OpenSans-Regular.eot?#iefix") format("embedded-opentype"), url("../fonts/OpenSans/Regular/OpenSans-Regular.woff") format('woff'), url("../fonts/OpenSans/Regular/OpenSans-Regular.ttf") format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: OpenSans;
+    src: url("../fonts/OpenSans/Bold/OpenSans-Bold.eot");
+    src: url("../fonts/OpenSans/Bold/OpenSans-Bold.eot?#iefix") format("embedded-opentype"), url("../fonts/OpenSans/Bold/OpenSans-Bold.woff") format('woff'), url("../fonts/OpenSans/Bold/OpenSans-Bold.ttf") format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: Gilroy;
+    src: url("../fonts/Gilroy/Gilroy-Medium.eot");
+    src: url("../fonts/Gilroy/Gilroy-Medium.eot?#iefix") format("embedded-opentype"), url("../fonts/Gilroy/Gilroy-Medium.woff") format('woff'), url("../fonts/Gilroy/Gilroy-Medium.ttf") format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: Gilroy;
+    src: url("../fonts/Gilroy/Gilroy-Bold.eot");
+    src: url("../fonts/Gilroy/Gilroy-Bold.eot?#iefix") format("embedded-opentype"), url("../fonts/Gilroy/Gilroy-Bold.woff") format('woff'), url("../fonts/Gilroy/Gilroy-Bold.ttf") format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: Roboto;
+    src: url("../fonts/Roboto/Roboto-Regular.eot");
+    src: url("../fonts/Roboto/Roboto-Regular.eot?#iefix") format("embedded-opentype"), url("../fonts/Roboto/Roboto-Regular.woff") format('woff'), url("../fonts/Roboto/Roboto-Regular.ttf") format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: Roboto;
+    src: url("../fonts/Roboto/Roboto-Bold.eot");
+    src: url("../fonts/Roboto/Roboto-Bold.eot?#iefix") format("embedded-opentype"), url("../fonts/Roboto/Roboto-Bold.woff") format('woff'), url("../fonts/Roboto/Roboto-Bold.ttf") format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+
+/* ОБЩИЕ СТИЛИ ДЛЯ ВСЕХ ЭЛЕМЕНТОВ */
+* {
+    padding: 0;
+    margin: 0;
+    font-family: Roboto;
+    box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5 {
+    color: $dark_aqua_color;
+}
+
+h2 {
+    font-size: 19px;
+    text-transform: uppercase;
+}
+
+h3 {
+    font-size: 18px;
+    text-transform: uppercase;
+}
+
+h4 {
+    font-size: 17px;
+}
+
+h5 {
+    font-size: 16px;
+}
+
+a {
+    color: $black_color;
+}
+
+p, a, label, input, textarea, td, th, button,
+li, span, dt, dd {
+    font-size: 13px;
+}
+
+i {
+    font-size: 23px !important;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:focus {
+    border: none;
+    outline: none;
+}
+
+input, textarea {
+    outline: none;
+    background: none;
+}
+
+ul {
+    list-style: none;
+}
+
+.pc-hide {
+    display: none;
+}
+
+/* АДАПТАЦИЯ К ШИРИНЕ ЭКРАНА МЕНЕЕ 1000 PX */
+@media(max-width:$tablet_width) {
+    .tablet-hide {
+        display: none;
+    }
+
+    .pc-hide {
+        display: unset;
+    }
+}
+
+/* АДАПТАЦИЯ К ШИРИНЕ ЭКРАНА МЕНЕЕ 450 PX */
+@media(max-width:$mobile_width) {
+    h2 {
+        font-size: 18px;
+        text-transform: uppercase;
+    }
+
+    h3 {
+        font-size: 17px;
+        text-transform: uppercase;
+    }
+
+    h4 {
+        font-size: 16px;
+    }
+
+    h5 {
+        font-size: 15px;
+    }
+
+    p, a, label, input, textarea, td, th, button,
+    li, span, dt, dd {
+        font-size: 14px;
+    }
+}

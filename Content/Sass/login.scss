@@ -1,0 +1,77 @@
+﻿@import "variables.scss";
+
+/* СТИЛИЗАЦИЯ ФОРМЫ ВХОДА */
+.login {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    padding: 0 15vw;
+    background: $dark_grey_color;
+
+    .panel {
+        .panel-header {
+            h2 {
+                color: $white_color;
+            }
+        }
+
+        .panel-body {
+            border-top-color: $white_color;
+
+            .form {
+                .form-group {
+                    .form-label {
+                        color: $white_color;
+                    }
+
+                    .form-input {
+                        background: $white_color;
+                        border: 1px solid $dark_orange_color;
+
+                        &:active,
+                        &:focus {
+                            box-shadow: 0 0 0 1px $dark_orange_color;
+                        }
+                    }
+
+                    .input-validation-error {
+                        border: 1px solid $red_color !important;
+
+                        &:focus {
+                            box-shadow: 0 0 0 1px $red_color !important;
+                        }
+                    }
+                }
+
+                .reset-password {
+                    text-align: right;
+
+                    a {
+                        color: $white_color;
+
+                        &:hover {
+                            text-decoration: underline;
+                        }
+                    }
+                }
+            }
+
+            .error-message {
+                color: $white_color;
+                text-transform: none;
+                line-height: 2;
+            }
+        }
+
+        .panel-footer {
+            border-top-color: $white_color;
+        }
+    }
+}
+
+/* АДАПТАЦИЯ К ШИРИНЕ ЭКРАНА МЕНЕЕ 1000 PX */
+@media(max-width: 799px) {
+    .login {
+        padding: 0;
+    }
+}

@@ -1,0 +1,25 @@
+﻿@model UkrStanko.ViewModels.Home.PasswordViewModel
+
+@{
+    ViewBag.Title = "Смена пароля";
+    Layout = "_LoginLayout";
+}
+
+<div class="login">
+    <div class="panel">
+        <div class="panel-header">
+            <h2 class="form-title">Ошибка! Что-то пошло не так....</h2>
+        </div>
+
+        <div class="panel-body">
+            <h4 class="error-message">
+                Произошла ошибка при обработке вашего запроса... <br/>
+                Повторите попытку позже!
+            </h4>
+        </div>
+
+        <div class="panel-footer">
+            <a asp-action="Index" asp-controller="Notices" class="btn btn-info">На главную</a>
+        </div>
+    </div>
+</div>

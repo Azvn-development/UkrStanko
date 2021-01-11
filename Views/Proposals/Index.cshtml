@@ -1,0 +1,21 @@
+﻿@model UkrStanko.ViewModels.Proposals.IndexViewModel
+
+@{
+    ViewBag.Title = "Предложения";
+
+    ViewBag.AddButton = true;
+    ViewBag.Filters = true;
+    ViewBag.Search = true;
+}
+
+@await Html.PartialAsync("~/Views/Shared/_Controls.cshtml")
+
+<div class="data" id="data">
+    @await Html.PartialAsync("_Table", Model.Proposals)
+</div>
+
+<script>
+    $(window).scrollTop(0);
+
+    checkCurrentUrl('@Url.Action("Index")');
+</script>

@@ -1,0 +1,9 @@
+﻿<script>
+    $.validator.unobtrusive.parse('.form');
+
+    $("#ConnectionId").val(sessionStorage.getItem("connectionId"));
+
+    downloadImage($("#downloadFileDialog"), $("#ImagesInput"), $("#ImagePath"));
+
+    userRolesAutocomplete("#Role", @Json.Serialize(Model.Roles));
+</script>

@@ -1,0 +1,35 @@
+﻿@import "variables.scss";
+
+/* СТИЛИЗАЦИЯ ДИАЛОГОВ */
+.waiting-modal {
+    position: fixed;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3));
+    z-index: 1002;
+
+    .waiting-wheel {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: 2vw;
+        margin-top: 7vh;
+        padding: 1vh 0.5vw;
+        font-weight: bold;
+        background: $light_blue_color;
+        border-radius: 8px;
+
+        i, p {
+            color: $black_color;
+        }
+
+        p {
+            padding-left: 1vw;
+        }
+    }
+}

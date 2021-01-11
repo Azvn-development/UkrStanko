@@ -1,0 +1,26 @@
+﻿@model UkrStanko.ViewModels.Notices.IndexViewModel
+
+@{
+    ViewBag.Title = "Новости";
+    ViewBag.Messages = true;
+    ViewBag.Search = true;
+}
+
+@await Html.PartialAsync("~/Views/Shared/_Controls.cshtml")
+
+<div class="data" id="data">
+    @await Html.PartialAsync("_Table")
+</div>
+
+<script>
+    $(window).scrollTop(0);
+    scrollToFirstNewNotice();
+    saveStartReadedNoticesCounter(@Model.ReadedNoticesCount);
+
+    checkNoticeShow('@Url.Action("ReadNoticesAJAX")');
+    $(window).scroll(function () {
+        checkNoticeShow('@Url.Action("ReadNoticesAJAX")');
+    });
+
+    checkCurrentUrl('@Url.Action("Index")');
+</script>

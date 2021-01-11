@@ -1,0 +1,240 @@
+﻿@model UkrStanko.ViewModels.Notices.IndexViewModel
+
+@{
+    var ruCulture = new CultureInfo("ru");
+
+    int downloadedCount = Model.DownloadedCount == 0 ? Model.Notices.Count() : Model.DownloadedCount;
+    int i = Model.AllNoticesCount - downloadedCount; // Счетчик новостей
+
+    bool download = ViewBag.Download == null ? true : ViewBag.Download;
+}
+
+@if (downloadedCount != Model.AllNoticesCount && download)
+{
+    <li id="downloadItemsContainer" onclick="downloadItems('@Url.Action("DownloadAJAX")', '#info', @downloadedCount, true)" class="info-item download-wheel">
+        <i id="downloadItemsWheel" class="fa fa-spinner fa-pulse fa-3x fa-fw" style="display:none"></i>
+        <p id="downloadItemsText">Показать еще записи</p>
+    </li>
+} @* if *@
+
+@foreach (var item in Model.Notices)
+{
+    @if (item.Requisition != null)
+    {
+        <li class="info-item requisition @(i >= Model.ReadedNoticesCount && download ? "new-notice" : null) @(i == Model.ReadedNoticesCount && download ? "first-new-notice unreaded" : null)">
+            @* Заголовок *@
+            <div class="info-header" onclick="goToUrl(null, '@Url.Action("Details", "Requisitions", new { id = item.Requisition.Id })', false)">
+                <h5>
+                    @item.Requisition.UserName.ToUpper() - заявка
+                </h5>
+
+                <p>@item.Requisition.CreateDate.ToString("dd.MM.yyyy")</p>
+            </div>
+
+            <div class="info-body">
+                <div class="info-body-item" onclick="goToUrl(null, '@Url.Action("Details", "Requisitions", new { id = item.Requisition.Id })', false)">
+                    @* Изображение пользователя *@
+                    <div class="user" style="background: url('@(item.Requisition.UserImagePath != null ? item.Requisition.UserImagePath : Url.Content("~/no-user.svg"))') 50% 50% no-repeat; background-size: cover"></div>
+
+                    @* Информация *@
+                    <div class="message">
+                        <div class="text">@item.Requisition.ContactName, @item.Requisition.Location, @item.Requisition.Phone</div>
+                        <div class="text"><b>@item.Requisition.Machine.Name</b></div>
+                        <div class="text">@item.Requisition.Comment</div>
+                    </div>
+                </div>
+
+                @* Иконки управления *@
+                <div class="info-body-icons">
+                    <i id="replyMessageIcon" class="fa fa-reply icon-default" onclick="{
+                        $('#response').attr('hidden', false);
+                        $('#responseId').val('@item.Requisition.Id');
+                        $('#responseType').val('Requisition');
+                        $('#responseTitle').html('@item.Requisition.UserName.ToUpper() - заявка');
+                        $('#responseInfo').html('@item.Requisition.CreateDate.ToString("dd.MM.yyyy") - @item.Requisition.ContactName, @item.Requisition.Location, @item.Requisition.Phone');
+                        $('#responseSubject').html('@item.Requisition.Machine.Name');
+                        showDialog('#message-dialog');
+                    }"></i>
+                </div>
+            </div>
+
+            <div class="info-footer">
+                @if (item.Requisition.UserPriority != null)
+                {
+                    <p class="danger-message"><b>Общий приоритет от @item.Requisition.UserPriority.Value.Value.ToString("dd.MM.yyyy") у @item.Requisition.UserPriority.Value.Key.ToUpper()</b></p>
+                } @* if *@
+
+                @* Расчет доступных предложений *@
+                <div class="available-items">
+                    @if (item.Requisition.ProposalUserPaths != null)
+                    {
+                        <span>Предложения: </span>
+
+                        @foreach (var userImage in item.Requisition.ProposalUserPaths)
+                        {
+                            <div class="user-img" style="background: url('@(userImage.Value != null ? userImage.Value : Url.Content("~/no-user.svg"))') 50% 50% no-repeat; background-size: cover"></div>
+                        } @* foreach *@
+                    }
+                    else
+                    {
+                        <span>Предложений в наличии нет</span>
+                    }@* if *@
+                </div>
+            </div>
+        </li>
+    }
+    else if (item.Proposal != null)
+    {
+        <li class="info-item proposal @(i >= Model.ReadedNoticesCount && download ? "new-notice" : null) @(i == Model.ReadedNoticesCount && download ? "first-new-notice unreaded" : null)">
+            @* Заголовок *@
+            <div class="info-header" onclick="goToUrl(null, '@Url.Action("Details", "Proposals", new { id = item.Proposal.Id })', false)">
+                <h5>
+                    @item.Proposal.UserName.ToUpper() - предложение
+                </h5>
+
+                <p>@item.Proposal.CreateDate.ToString("dd.MM.yyyy")</p>
+            </div>
+
+            <div class="info-body">
+                <div class="info-body-item" onclick="goToUrl(null, '@Url.Action("Details", "Proposals", new { id = item.Proposal.Id })', false)">
+                    @* Изображение пользователя *@
+                    <div class="user" style="background: url('@(item.Proposal.UserImagePath != null ? item.Proposal.UserImagePath : Url.Content("~/no-user.svg"))') 50% 50% no-repeat; background-size: cover"></div>
+
+                    @* Информация *@
+                    <div class="message">
+                        <div class="text">@item.Proposal.Location</div>
+                        <div class="text"><b>@item.Proposal.Machine.Name</b></div>
+                        <div class="text">@(string.Format(ruCulture, "{0:N0}", item.Proposal.PurshasePrice)) / @(string.Format(ruCulture, "{0:N0}", item.Proposal.SellingPrice)) тыс. грн.</div>
+                        <div class="text">@item.Proposal.Comment</div>
+                    </div>
+                </div>
+
+                @* Иконки управления *@
+                <div class="info-body-icons">
+                    <i id="replyMessageIcon" class="fa fa-reply icon-default" onclick="{
+                        $('#response').attr('hidden', false);
+                        $('#responseId').val('@item.Proposal.Id');
+                        $('#responseType').val('Proposal');
+                        $('#responseTitle').html('@item.Proposal.UserName.ToUpper() - предложение');
+                        $('#responseInfo').html('@item.Proposal.CreateDate.ToString("dd.MM.yyyy") - @item.Proposal.Location, @(string.Format(ruCulture, "{0:N0}", item.Proposal.PurshasePrice)) / @(string.Format(ruCulture, "{0:N0}", item.Proposal.SellingPrice)) тыс. грн.');
+                        $('#responseSubject').html('@item.Proposal.Machine.Name');
+                        showDialog('#message-dialog');
+                    }"></i>
+                </div>
+            </div>
+
+            <div class="info-footer">
+                @* Расчет доступных заявок *@
+                <div class="available-items">
+                    @if (item.Proposal.RequisitionUserPaths != null)
+                    {
+                        <span>Заявки: </span>
+
+                        @foreach (var userImage in item.Proposal.RequisitionUserPaths)
+                        {
+                            <div class="user-img" style="background: url('@(userImage.Value != null ? userImage.Value : Url.Content("~/no-user.svg"))') 50% 50% no-repeat; background-size: cover"></div>
+                        } @* foreach *@
+                    }
+                    else
+                    {
+                        <span>Заявок в наличии нет</span>
+                    }@* if *@
+                </div>
+            </div>
+        </li>
+    }
+    else
+    {
+        <li id="container_@item.Message.Id" class="info-item @(i >= Model.ReadedNoticesCount && download ? "new-notice" : null) @(i == Model.ReadedNoticesCount && download ? "first-new-notice unreaded" : null)">
+            @* Заголовок *@
+            <div class="info-header">
+                <h5>
+                    @item.Message.UserName.ToUpper() - сообщение
+                </h5>
+
+                <p>@item.Message.CreateDate.ToString("dd.MM.yyyy")</p>
+            </div>
+
+            <div class="info-body">
+                <div class="info-body-item">
+                    @* Изображение пользователя *@
+                    <div class="user" style="background: url('@(item.Message.UserImagePath != null ? item.Message.UserImagePath : Url.Content("~/no-user.svg"))') 50% 50% no-repeat; background-size: cover"></div>
+
+                    @* Информация *@
+                    <div class="message">
+                        @if (item.Message.Response)
+                        {
+                            @if (item.Message.ResponseRequisition != null)
+                            {
+                                <div id="response" class="response">
+                                    <div class="response-title">@item.Message.ResponseRequisition.UserName.ToUpper() - заявка</div>
+                                    <div class="response-info">
+                                        @item.Message.ResponseRequisition.CreateDate.ToString("dd.MM.yyyy") -
+                                        @item.Message.ResponseRequisition.ContactName,
+                                        @item.Message.ResponseRequisition.Location,
+                                        @item.Message.ResponseRequisition.Phone
+                                    </div>
+                                    <div class="response-subject">@item.Message.ResponseRequisition.Machine.Name</div>
+                                </div>
+                            }
+                            else if (item.Message.ResponseProposal != null)
+                            {
+                                <div id="response" class="response">
+                                    <div class="response-title">@item.Message.ResponseProposal.UserName.ToUpper() - предложение</div>
+                                    <div class="response-info">
+                                        @item.Message.ResponseProposal.CreateDate.ToString("dd.MM.yyyy") -
+                                        @item.Message.ResponseProposal.Location,
+                                        @(string.Format(ruCulture, "{0:N0}", item.Message.ResponseProposal.PurshasePrice)) /
+                                        @(string.Format(ruCulture, "{0:N0}", item.Message.ResponseProposal.SellingPrice)) тыс. грн.
+                                    </div>
+                                    <div class="response-subject">@item.Message.ResponseProposal.Machine.Name</div>
+                                </div>
+                            }
+                            else if (item.Message.ResponseMessage != null)
+                            {
+                                <div id="response" class="response">
+                                    <div class="response-title">@item.Message.ResponseMessage.UserName.ToUpper() - сообщение</div>
+                                    <div class="response-info">
+                                        @item.Message.ResponseMessage.CreateDate.ToString("dd.MM.yyyy") -
+                                        @item.Message.ResponseMessage.Text
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div id="response" class="response">
+                                    <div class="response-title">Запись удалена</div>
+                                </div>
+                            } @* if *@
+                        } @* if *@
+
+                        <div class="text">@item.Message.Text</div>
+                    </div>
+                </div>
+
+
+                @* Иконки управления *@
+                <div class="info-body-icons">
+                    <i id="replyMessageIcon" class="fa fa-reply icon-default" onclick="{
+                        $('#response').attr('hidden', false);
+                        $('#responseId').val('@item.Message.Id');
+                        $('#responseType').val('Message');
+                        $('#responseTitle').html('@item.Message.UserName.ToUpper() - сообщение');
+                        $('#responseInfo').html('@item.Message.CreateDate.ToString("dd.MM.yyyy") - @item.Message.Text');
+                        showDialog('#message-dialog');
+                    }"></i>
+                    @if (item.Message.UserName == User.Identity.Name || User.IsInRole("Администратор"))
+                    {
+                        <i id="@item.Message.Id" name="messageRemoveIcon" class="fa fa-minus-square icon-cancel" onclick="{
+                            $('[name=\'dialog-delete-button\']').attr('id', $(this).attr('id'));
+                            $('[name=\'dialog-delete-button\']').attr('data-containerId', '#container_@item.Message.Id');
+                            showDialog('#delete-dialog')
+                        }"></i>
+                    } @* if *@
+                </div>
+            </div>
+        </li>
+    } @* if *@
+
+    i++;
+} @*foreach*@

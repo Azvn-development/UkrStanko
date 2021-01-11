@@ -1,0 +1,12 @@
+﻿@model UkrStanko.ViewModels.Notices.IndexViewModel
+
+@if (Model.Notices.Count() == 0)
+{
+    <h4 class="danger-message">Новости не найдены</h4>
+}
+else
+{
+    <ul id="info" class="info">
+        @await Html.PartialAsync("_TBody")
+    </ul>
+}

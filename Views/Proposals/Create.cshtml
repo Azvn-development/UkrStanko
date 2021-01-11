@@ -1,0 +1,79 @@
+﻿@model UkrStanko.ViewModels.Proposals.CreateViewModel
+
+<div class="panel">
+    <div class="panel-header">
+        <h2 class="form-title">Добавление предложения</h2>
+    </div>
+
+    <div class="panel-body">
+        <form asp-action="Create"
+              method="post"
+              novalidate="novalidate"
+              data-ajax="true"
+              data-ajax-method="post"
+              data-ajax-update="#main-data"
+              data-ajax-begin="$('#waiting-modal').fadeIn('fast')"
+              data-ajax-complete="$('#waiting-modal').fadeOut('fast')"
+              enctype="multipart/form-data"
+              class="form">
+            <div class="validation" asp-validation-summary="ModelOnly"></div>
+
+            @*Скрытые поля формы*@
+            <input id="More" name="More" value="false" hidden />
+
+            @* Поле соединения пользователя *@
+            <input id="ConnectionId" name="ConnectionId" hidden />
+
+            @*Поле ввода локации оборудования*@
+            <div class="form-group">
+                <label asp-for="Location" class="form-label"></label>
+                <input asp-for="Location" class="form-input" placeholder="@Html.DisplayNameFor(model => model.Location)" autocomplete="off" tabindex="1" />
+                <span asp-validation-for="Location"></span>
+            </div>
+
+            @*Поле ввода оборудования*@
+            <div class="form-group">
+                <label asp-for="Machine" class="form-label"></label>
+                <input asp-for="Machine" class="form-input uppercase" placeholder="@Html.DisplayNameFor(model => model.Machine)" autocomplete="off" tabindex="2" />
+                <span asp-validation-for="Machine"></span>
+            </div>
+
+            @*Поле ввода цены покупки оборудования*@
+            <div class="form-group">
+                <label asp-for="PurshasePrice" class="form-label"></label>
+                <input asp-for="PurshasePrice" class="form-input" data-val-number="Введите корректное число!" placeholder="@Html.DisplayNameFor(model => model.PurshasePrice)" autocomplete="off" tabindex="3" />
+                <span asp-validation-for="PurshasePrice"></span>
+            </div>
+
+            @*Поле ввода цены продажи оборудования*@
+            <div class="form-group">
+                <label asp-for="SellingPrice" class="form-label"></label>
+                <input asp-for="SellingPrice" class="form-input" data-val-number="Введите корректное число!" placeholder="@Html.DisplayNameFor(model => model.SellingPrice)" autocomplete="off" tabindex="4" />
+                <span asp-validation-for="SellingPrice"></span>
+            </div>
+
+            @*Поле ввода комментария*@
+            <div class="form-group">
+                <label asp-for="Comment" class="form-label"></label>
+                <input asp-for="Comment" class="form-input" placeholder="@Html.DisplayNameFor(model => model.Comment)" autocomplete="off" tabindex="5" />
+            </div>
+
+            @*Поле загрузки фото*@
+            <div class="form-images-group">
+                <h5>Фотографии</h5>
+                <a id="downloadFilesDialog" class="btn btn-default">Загрузить фото</a>
+                <input id="ImagesInput" type="file" accept="image/*,image/jpeq,image/png" multiple hidden />
+
+                <ul id="ImagesList"></ul>
+            </div>
+
+            <div class="form-btn-group">
+                <button type="submit" class="btn btn-add">Добавить</button>
+                <button type="submit" onclick="{ $('#More').val(true) }" class="btn btn-add">Добавить еще</button>
+                <a onclick="goToUrl(null, '@Url.Action("Index")', false)" class="btn btn-cancel">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@await Html.PartialAsync("_Scripts") 

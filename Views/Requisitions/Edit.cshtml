@@ -1,0 +1,68 @@
+﻿@model UkrStanko.ViewModels.Requisitions.EditViewModel
+
+<div class="panel">
+    <div class="panel-header">
+        <h2 class="form-title">Редактирование заявки</h2>
+    </div>
+
+    <div class="panel-body">
+        <form asp-action="Edit"
+              method="post"
+              novalidate="novalidate"
+              data-ajax="true"
+              data-ajax-method="post"
+              data-ajax-update="#main-data"
+              data-ajax-begin="$('#waiting-modal').fadeIn('fast')"
+              data-ajax-complete="$('#waiting-modal').fadeOut('fast')"
+              class="form">
+
+            @*Скрытые поля формы*@
+            <input asp-for="Id" hidden />
+            <input id="ReturnUrl" hidden />
+
+            @* Поле соединения пользователя *@
+            <input id="ConnectionId" name="ConnectionId" hidden />
+
+            @*Поле ввода номера телефона клиента*@
+            <div class="form-group">
+                <label asp-for="Phone" class="form-label"></label>
+                <input asp-for="Phone" class="form-input" placeholder="@Html.DisplayNameFor(model => model.Phone)" autocomplete="off" tabindex="1" />
+                <span asp-validation-for="Phone"></span>
+            </div>
+
+            @*Поле ввода имени клиента*@
+            <div class="form-group">
+                <label asp-for="ContactName" class="form-label"></label>
+                <input asp-for="ContactName" class="form-input" placeholder="@Html.DisplayNameFor(model => model.ContactName)" autocomplete="off" tabindex="2" />
+                <span asp-validation-for="ContactName"></span>
+            </div>
+
+            @*Поле ввода локации клиента*@
+            <div class="form-group">
+                <label asp-for="Location" class="form-label"></label>
+                <input asp-for="Location" class="form-input" placeholder="@Html.DisplayNameFor(model => model.Location)" autocomplete="off" tabindex="3" />
+                <span asp-validation-for="Location"></span>
+            </div>
+
+            @*Поле ввода оборудования*@
+            <div class="form-group">
+                <label asp-for="Machine" class="form-label"></label>
+                <input asp-for="Machine" class="form-input uppercase" placeholder="@Html.DisplayNameFor(model => model.Machine)" autocomplete="off" tabindex="4" />
+                <span asp-validation-for="Machine"></span>
+            </div>
+
+            @*Поле ввода комментария*@
+            <div class="form-group">
+                <label asp-for="Comment" class="form-label"></label>
+                <input asp-for="Comment" class="form-input" placeholder="@Html.DisplayNameFor(model => model.Comment)" autocomplete="off" tabindex="5" />
+            </div>
+
+            <div class="form-btn-group">
+                <button type="submit" class="btn btn-add">Сохранить</button>
+                <a onclick="goHistoryBack(window.history.href)" class="btn btn-cancel">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@await Html.PartialAsync("_Scripts")

@@ -1,0 +1,59 @@
+﻿@model UkrStanko.ViewModels.Machines.CreateViewModel
+
+@{
+    ViewBag.Url = Url.Action("Create");
+}
+
+<div class="panel">
+    <div class="panel-header">
+        <h2 class="form-title">Добавление станка</h2>
+    </div>
+
+    <div class="panel-body">
+        <form asp-action="Create"
+              method="post"
+              novalidate="novalidate"
+              data-ajax="true"
+              data-ajax-method="post"
+              data-ajax-update="#main-data"
+              data-ajax-begin="$('#waiting-modal').fadeIn('fast')"
+              data-ajax-complete="$('#waiting-modal').fadeOut('fast')"
+              class="form">
+
+            @* Поле ИД *@
+            <input asp-for="Id" hidden />
+
+            @* Поле соединения пользователя *@
+            <input id="ConnectionId" name="ConnectionId" hidden />
+
+            @*Поле ввода наименования*@
+            <div class="form-group">
+                <label asp-for="Name" class="form-label"></label>
+                <input asp-for="Name" class="form-input uppercase" placeholder="@Html.DisplayNameFor(model => model.Name)" autocomplete="off" tabindex="1" />
+                <span asp-validation-for="Name"></span>
+            </div>
+
+            @*Поле типа оборудования*@
+            <div class="form-group">
+                <input asp-for="MachineTypeId" hidden />
+
+                <label asp-for="MachineType" class="form-label"></label>
+                <input asp-for="MachineType" class="form-input" placeholder="@Html.DisplayNameFor(model => model.MachineType)" autocomplete="off" tabindex="2" />
+                <span asp-validation-for="MachineType"></span>
+            </div>
+
+            @*Поле аналога*@
+            <div class="form-group">
+                <label asp-for="Analogue" class="form-label"></label>
+                <input asp-for="Analogue" class="form-input uppercase" placeholder="@Html.DisplayNameFor(model => model.Analogue)" autocomplete="off" tabindex="3" />
+            </div>
+
+            <div class="form-btn-group">
+                <button type="submit" class="btn btn-add">Добавить</button>
+                <a onclick="goToUrl(null, '@Url.Action("Index")', false)" class="btn btn-cancel">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@await Html.PartialAsync("_Scripts") 

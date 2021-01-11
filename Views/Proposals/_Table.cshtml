@@ -1,0 +1,87 @@
+﻿@model IEnumerable<UkrStanko.Models.App.Proposal>
+
+@{
+    var ruCulture = new CultureInfo("ru");
+
+    int i = Model.Count();
+}
+
+@if (i == 0)
+{
+    <h4 class="danger-message">Предложения не найдены</h4>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th colspan="2">@Html.DisplayNameFor(model => model.UserName)</th>
+                <th>@Html.DisplayNameFor(model => model.Id)</th>
+                <th>@Html.DisplayNameFor(model => model.CreateDate)</th>
+                <th>@Html.DisplayNameFor(model => model.Location)</th>
+                <th>@Html.DisplayNameFor(model => model.MachineId)</th>
+                <th>Цена пок/прод</th>
+                <th>@Html.DisplayNameFor(model => model.Comment)</th>
+                @if (ViewBag.Details == null)
+                {
+                    <th></th>
+                } @* if *@
+            </tr>
+        </thead>
+
+        <tbody class="nowrap">
+            @foreach (var item in Model.OrderByDescending(i => i.CreateDate))
+            {
+                string detailsUrl = Url.Action("Details", "Proposals", new { id = item.Id });
+
+                <tr class="user-row @(item.UserName == User.Identity.Name ? "active": null) pc-hide">
+                    <td>
+                        <div class="user-img" style="background: url('@(item.UserImagePath != null ? item.UserImagePath : Url.Content("~/no-user.svg"))') 50% 50% no-repeat; background-size: cover"></div>
+                    </td>
+
+                    @if ((User.Identity.Name == item.UserName || User.IsInRole("Администратор")) && ViewBag.Details == null)
+                    {
+                        <td>
+                            <i onclick="goToUrl(window.location.href, '@Url.Action("Edit", new { id = item.Id })', false)" class="fa fa-pencil-square fa-2x icon-info"></i>
+                            <i id="@item.Id" class="fa fa-minus-square fa-2x icon-cancel" onclick="{ $('[name=\'dialog-delete-button\']').attr('id', $(this).attr('id')); showDialog('#delete-dialog') }"></i>
+                        </td>
+                    } @* if *@
+                </tr>
+
+                <tr class="user-details-row @(item.UserName == User.Identity.Name ? "active": null)">
+                    <td width="2%" align="center" onclick="goToUrl(null, '@detailsUrl', false)" class="tablet-hide">
+                        <div class="user-img" style="background: url('@(item.UserImagePath != null ? item.UserImagePath : Url.Content("~/no-user.svg"))') 50% 50% no-repeat; background-size: cover"></div>
+                    </td>
+
+                    <td width="2%" onclick="goToUrl(null, '@detailsUrl', false)" class="tablet-hide">
+                        <b>@item.UserName</b>
+                    </td>
+
+                    <td align="center" width="2%" description="Предложение №@i" onclick="goToUrl(null, '@detailsUrl', false)" class="title">
+                        <p class="tablet-hide">@(i--)</p>
+                    </td>
+
+                    <td align="center" onclick="goToUrl(null, '@detailsUrl', false)" class="pc-hide"><b>@item.UserName</b> - <span>@item.CreateDate.ToString("dd.MM.yyyy")</span></td>
+                    <td align="center" onclick="goToUrl(null, '@detailsUrl', false)" class="tablet-hide">@item.CreateDate.ToString("dd.MM.yyyy")</td>
+                    <td align="center" onclick="goToUrl(null, '@detailsUrl', false)" class="ellipsis">@item.Location</td>
+                    <td align="center" onclick="goToUrl(null, '@detailsUrl', false)" class="ellipsis"><b>@item.Machine.Name</b></td>
+                    <td align="center" onclick="goToUrl(null, '@detailsUrl', false)" class="price">@(string.Format(ruCulture, "{0:N0}", item.PurshasePrice)) / @(string.Format(ruCulture, "{0:N0}", item.SellingPrice)) тыс. грн.</td>
+                    <td align="center" onclick="goToUrl(null, '@detailsUrl', false)" class="ellipsis">@item.Comment</td>
+
+                    @if (ViewBag.Details == null)
+                    {
+                        <td width="10%" align="center" class="tablet-hide">
+                            @if (User.Identity.Name == item.UserName || User.IsInRole("Администратор"))
+                            {
+                                <span>
+                                    <i onclick="goToUrl(window.location.href, '@Url.Action("Edit", new { id = item.Id })', false)" class="fa fa-pencil-square icon-info"></i>
+                                    <i id="@item.Id" class="fa fa-minus-square icon-cancel" onclick="{ $('[name=\'dialog-delete-button\']').attr('id', $(this).attr('id')); showDialog('#delete-dialog') }"></i>
+                                </span>
+                            } @* if *@
+                        </td>
+                    } @* if *@
+                </tr>
+            } @*foreach*@
+        </tbody>
+    </table>
+}

@@ -1,0 +1,144 @@
+﻿@import "variables.scss";
+
+/*Стилизация кнопок*/
+.btn {
+    display: inline-flex;
+    padding: 10px 2vw;
+    align-items: center;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 5px;
+    justify-content: center;
+    color: $white_color;
+    border: none;
+
+    &:focus {
+        outline: none;
+    }
+
+    &:hover {
+        transition: all 0.3s;
+    }
+}
+
+.btn-add {
+    background: $green_color;
+
+    &:hover {
+        background: $dark_green_color;
+        transition: all 0.3s;
+    }
+}
+
+.btn-cancel {
+    background: $red_color;
+
+    &:hover {
+        background: $dark_red_color;
+        transition: all 0.3s;
+    }
+}
+
+.btn-default {
+    background: $aqua_color;
+
+    &:hover {
+        background: $dark_aqua_color;
+        transition: all 0.3s;
+    }
+}
+
+.btn-info {
+    background: $orange_color;
+
+    &:hover {
+        background: $dark_orange_color;
+        transition: all 0.3s;
+    }
+}
+
+/* Стилизация иконок */
+.icon-add {
+    cursor: pointer;
+    color: $green_color;
+
+    &:hover {
+        color: $dark_green_color;
+        transition: all 0.3s;
+    }
+}
+
+.icon-cancel {
+    cursor: pointer;
+    color: $red_color;
+
+    &:hover {
+        color: $dark_red_color;
+        transition: all 0.3s;
+    }
+}
+
+.icon-default {
+    cursor: pointer;
+    color: $aqua_color;
+
+    &:hover {
+        color: $dark_aqua_color;
+        transition: all 0.3s;
+    }
+}
+
+.icon-info {
+    cursor: pointer;
+    color: $orange_color;
+
+    &:hover {
+        color: $dark_orange_color;
+        transition: all 0.3s;
+    }
+}
+
+/*Стилизация группы кнопок*/
+.btn-group {
+    display: flex;
+    height: 100%;
+
+    a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+
+        &:first-child {
+            padding-right: 0.2vw;
+        }
+    }
+}
+
+/* АДАПТАЦИЯ К ШИРИНЕ ЭКРАНА МЕНЕЕ 1000 PX */
+@media(max-width:$tablet_width) {
+    .btn-group {
+        i {
+            &:first-child {
+                padding-right: 0.5vw;
+            }
+        }
+    }
+}
+
+
+/* АДАПТАЦИЯ К ШИРИНЕ ЭКРАНА МЕНЕЕ 450 PX */
+@media(max-width:$mobile_width) {
+    .btn {
+        font-size: 12px;
+    }
+
+    .btn-group {
+        i {
+            &:first-child {
+                padding-right: 2vw;
+            }
+        }
+    }
+}

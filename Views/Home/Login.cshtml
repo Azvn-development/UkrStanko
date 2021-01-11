@@ -1,0 +1,42 @@
+﻿@model UkrStanko.ViewModels.Home.LoginViewModel
+
+@{
+    ViewBag.Title = "Вход в систему";
+    Layout = "_LoginLayout";
+}
+
+<div class="login">
+    <div class="panel">
+        <div class="panel-header">
+            <h2 class="form-title">@ViewBag.Title</h2>
+        </div>
+
+        <div class="panel-body">
+            <form asp-action="Login" method="post" novalidate="novalidate" class="form">
+                <div class="validation" asp-validation-summary="ModelOnly"></div>
+
+                @*Поле ввода логина*@
+                <div class="form-group">
+                    <label asp-for="Login" class="form-label"></label>
+                    <input asp-for="Login" class="form-input" autocomplete="off" placeholder="@Html.DisplayNameFor(i => i.Login)" tabindex="1" />
+                    <span asp-validation-for="Login"></span>
+                </div>
+
+                @*Поле ввода пароля*@
+                <div class="form-group">
+                    <label asp-for="Password" class="form-label"></label>
+                    <input asp-for="Password" class="form-input" autocomplete="off" placeholder="@Html.DisplayNameFor(i => i.Password)" tabindex="2" />
+                    <span asp-validation-for="Password"></span>
+                </div>
+
+                <div class="reset-password">
+                    <a href="@Url.Action("Password")">Забыли пароль?</a>
+                </div>
+
+                <div class="form-btn-group">
+                    <button type="submit" class="btn btn-info">Войти</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

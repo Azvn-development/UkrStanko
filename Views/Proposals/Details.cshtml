@@ -1,0 +1,115 @@
+﻿@model UkrStanko.ViewModels.Proposals.DetailsViewModel
+
+@{
+    ViewBag.Details = true;
+
+    var ruCulture = new CultureInfo("ru");
+}
+
+<div class="panel">
+    @*Шапка диалога*@
+    <div class="panel-header">
+        <h2>Предложение</h2>
+
+        @if (User.Identity.Name == Model.Proposal.UserName || User.IsInRole("Администратор"))
+        {
+            <div class="btn-group">
+                <a onclick="goToUrl(window.location.href, '@Url.Action("Edit", new { id = Model.Proposal.Id })')">
+                    <i class="fa fa-pencil-square fa-2x icon-info"></i>
+                </a>
+                <i id="@Model.Proposal.Id" class="fa fa-minus-square fa-2x icon-cancel" onclick="{
+                    $('[name=\'dialog-delete-button\']').attr('id', $(this).attr('id'));
+                    $('[name=\'dialog-delete-button\']').attr('details', true);
+                    showDialog('#delete-dialog')}"></i>
+            </div>
+        } @* if *@
+    </div>
+
+    @*Тело диалога*@
+<div class="panel-body">
+    @if (Model.ProposalImages != null)
+    {
+        <div class="fotorama"
+             data-nav="thumbs"
+             data-loop="true"
+             data-auto="false"
+             data-width="100%"
+             data-maxwidth="800"
+             data-heigth="100%"
+             data-maxheight="400"
+             data-allowfullscreen="true">
+            @foreach (var item in Model.ProposalImages)
+            {
+                <a href="@Url.Content(item)" data-thumb="@Url.Content(item)"></a>
+            } @* foreach *@
+        </div>
+    } @* if *@
+
+    <table class="details-table">
+        @if (User.Identity.IsAuthenticated)
+        {
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Proposal.CreateDate)</th>
+                <td>@Model.Proposal.CreateDate.ToString("dd.MM.yyyy")</td>
+            </tr>
+
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Proposal.UserName)</th>
+                <td>@Model.Proposal.UserName</td>
+            </tr>
+        } @* if *@
+
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Proposal.Location)</th>
+            <td>@Model.Proposal.Location</td>
+        </tr>
+
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Proposal.MachineId)</th>
+            <td>@Model.Proposal.Machine.Name</td>
+        </tr>
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Proposal.PurshasePrice)</th>
+                <td>@(string.Format(ruCulture, "{0:N0}", Model.Proposal.PurshasePrice)) тыс. грн.</td>
+            </tr>
+
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Proposal.SellingPrice)</th>
+                <td>@(string.Format(ruCulture, "{0:N0}", Model.Proposal.SellingPrice)) тыс. грн.</td>
+            </tr>
+        } @* if *@
+
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Proposal.Comment)</th>
+            <td>@Model.Proposal.Comment</td>
+        </tr>
+    </table>
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <h3>Заявки на предложения</h3>
+        @await Html.PartialAsync("~/Views/Requisitions/_Table.cshtml", Model.Requisitions)
+    } @* if *@
+</div>
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        @*Подвал диалога*@
+        <div class="panel-footer">
+            <a onclick="goHistoryBack(window.location.href)" class="btn btn-default">Назад</a>
+        </div>
+    } @* if *@
+</div>
+
+@await Html.PartialAsync("~/Views/Shared/Dialogs/_AjaxDeleteDialog.cshtml")
+
+<script>
+    $(".fotorama").fotorama();
+
+    $(window).scrollTop(0);
+
+    checkCurrentUrl('@Url.Action("Details")');
+</script>

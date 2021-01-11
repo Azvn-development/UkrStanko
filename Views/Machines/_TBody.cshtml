@@ -1,0 +1,45 @@
+﻿@model IEnumerable<UkrStanko.Models.App.Machine>
+
+@{
+    int downloadedCount = ViewBag.DownloadedCount == null ? Model.Count() : ViewBag.DownloadedCount;
+    int i = 1 + downloadedCount - Model.Count();
+
+    bool download = ViewBag.Download == null ? true : ViewBag.Download;
+}
+
+@foreach (var item in Model)
+{
+    <tr id="container_@item.Id">
+        <td width="10%" align="center" class="tablet-hide">@(i++)</td>
+        <td align="center" description="@item.Name" class="title">
+            <p class="tablet-hide">@item.Name</p>
+
+            <span class="subsidiary-controls pc-hide">
+                <i onclick="goToUrl(window.location.href, '@Url.Action("Edit", new { id = item.Id })', false)" class="fa fa-pencil-square fa-2x icon-info"></i>
+                <i id="@item.Id" class="fa fa-minus-square fa-2x icon-cancel" onclick="{ $('[name=\'dialog-delete-button\']').attr('id', $(this).attr('id')); showDialog('#delete-dialog') }"></i>
+            </span>
+        </td>
+        <td align="center">@item.MachineType.ParentMachineType.Name</td>
+        <td align="center">@item.Analogue</td>
+        <td align="center" width="10%" class="tablet-hide">
+            <span>
+                <i onclick="goToUrl(window.location.href, '@Url.Action("Edit", new { id = item.Id })', false)" class="fa fa-pencil-square fa-2x icon-info"></i>
+                <i id="@item.Id" class="fa fa-minus-square fa-2x icon-cancel" onclick="{
+                    $('[name=\'dialog-delete-button\']').attr('id', $(this).attr('id'));
+                    $('[name=\'dialog-delete-button\']').attr('data-containerId', '#container_@item.Id');
+                    showDialog('#delete-dialog')
+                }"></i>
+            </span>
+        </td>
+    </tr>
+} @*foreach*@
+
+@if (downloadedCount % 50 == 0 && Model.Count() > 0 && download)
+{
+    <tr id="downloadItemsContainer">
+        <td colspan="5" onclick="downloadItems('@Url.Action("DownloadAJAX")', '#tbody', @downloadedCount, false)" class="download-wheel">
+            <i id="downloadItemsWheel" class="fa fa-spinner fa-pulse fa-3x fa-fw" style="display:none"></i>
+            <p id="downloadItemsText">Показать еще записи</p>
+        </td>
+    </tr>
+} @* if *@

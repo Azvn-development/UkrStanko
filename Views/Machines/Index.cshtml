@@ -1,0 +1,22 @@
+﻿@model UkrStanko.ViewModels.Machines.IndexViewModel
+
+@{
+    ViewBag.Title = "Станки";
+
+    ViewBag.AddButton = true;
+    ViewBag.Search = true;
+
+    ViewBag.Url = Url.Action("Index");
+}
+
+@await Html.PartialAsync("~/Views/Shared/_Controls.cshtml")
+
+<div class="data" id="data">
+    @await Html.PartialAsync("_Table", Model.Machines)
+</div>
+
+<script>
+    $(window).scrollTop(0);
+
+    checkCurrentUrl('@Url.Action("Index")');
+</script>

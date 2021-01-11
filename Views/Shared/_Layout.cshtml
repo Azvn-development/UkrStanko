@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>УкрСтанко</title>
+
+    <link rel="stylesheet" type="text/css" href="~/css/libs/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/css/libs/jquery-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/js/libs/fotorama/fotorama.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/css/index.min.css" />
+
+    <script>history.scrollRestoration = "manual"</script>
+
+    <script src="~/js/index.min.js"></script>
+    <script src="~/js/libs/jquery-3.5.1.min.js"></script>
+    <script src="~/js/libs/jquery-ui.min.js"></script>
+    <script src="~/js/libs/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/js/libs/jquery.validate.min.js"></script>
+    <script src="~/js/libs/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/js/libs/fotorama/fotorama.min.js"></script>
+    <script src="~/js/libs/dist/browser/signalr.min.js"></script>
+</head>
+<body onclick="hideDropDownMenu(event)">
+    <header class="header-dropdown">
+        @if (User.Identity.IsAuthenticated)
+        {
+            <i id="mainListToggle" class="header-nav-toggle header-dropdown-toggle fa fa-2x fa-bars" onclick="showDropDownMenu('#mainList', '#mainListToggle')"></i>
+        } @* if *@
+        <h3 class="header-title">Укрстанко</h3>
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            <nav id="mainList" class="header-nav header-dropdown-list left">
+                <a onclick="goToUrl(null, '@Url.Action("Index", "Notices")', false)" class="header-nav-link">Новости</a>
+                <a onclick="goToUrl(null, '@Url.Action("Index", "Requisitions")', false)" class="header-nav-link">Заявки</a>
+                <a onclick="goToUrl(null, '@Url.Action("Index", "Proposals")', false)" class="header-nav-link">Предложения</a>
+
+                @if (User.IsInRole("Администратор"))
+                {
+                    <div class="header-dropdown">
+                        <span id="catalogsListToggle" class="header-nav-link header-dropdown-toggle" onclick="showDropDownMenu('#catalogsList', '#catalogsListToggle')">Справочники</span>
+                        <ul id="catalogsList" class="header-dropdown-list">
+                            <li><a onclick="goToUrl(null, '@Url.Action("Index", "Machines")'), false" class="header-nav-link">Станки</a></li>
+                            <li><a onclick="goToUrl(null, '@Url.Action("Index", "MachineTypes")'), false" class="header-nav-link">Типы станков</a></li>
+                        </ul>
+                    </div>
+
+                    <a onclick="goToUrl(null, '@Url.Action("Index", "Users")')" class="header-nav-link">Пользователи</a>
+                } @* if *@
+            </nav>
+
+            <nav id="mainUserList" class="header-nav header-dropdown-list right">
+                <div class="header-dropdown">
+                    <i id="userListToggle" class="header-nav-link header-dropdown-toggle fa fa-2x fa-user-circle hide" onclick="showDropDownMenu('#userList', '#userListToggle')"></i>
+                    <div id="userList" class="header-dropdown-list">
+                        <a onclick="{ saveUrl(window.location.href); goToUrl(window.location.href, '@Url.Action("Edit", "Users", new { name = "own" })', false) }" class="header-nav-link">Редактировать</a>
+                        <a asp-action="Password" asp-controller="Home" class="header-nav-link">Сменить пароль</a>
+                        <a asp-action="Logout" asp-controller="Home" class="header-nav-link">Выйти</a>
+                    </div>
+                </div>
+            </nav>
+            <i id="mainUserListToggle" class="header-nav-toggle header-dropdown-toggle fa fa-2x fa-user-circle" onclick="showDropDownMenu('#mainUserList', '#mainUserListToggle')"></i>
+        } @* if *@
+
+        @if (!User.Identity.IsAuthenticated)
+        {
+            <a asp-action="Login" asp-controller="Home" class="header-nav-link"><i class="fa fa-2x fa-sign-in"></i></a>
+        } @* if *@
+    </header>
+
+    <main id="main-data">
+        @RenderBody()
+    </main>
+
+    <footer>
+        <p>УкрСтанко, @DateTime.Now.Year г.</p>
+    </footer>
+
+    <div id="pop-up-message" class="pop-up-message" style="display:none">
+        <i></i>
+        <p></p>
+    </div>
+
+    <div id="waiting-modal" class="waiting-modal" style="display:none">
+        <div class="waiting-wheel">
+            <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+            <p>Загрузка . . .</p>
+        </div>
+    </div>
+
+    <script>
+        window.onunload = function () {
+            goToUrl(null, window.location.href, true);
+        };
+
+        window.addEventListener("popstate", function () {
+            goToUrl(null, window.location.href, true);
+        });
+
+        @* Показ пуш-уведомлений *@
+        setHubConnection();
+    </script>
+</body>
+</html>

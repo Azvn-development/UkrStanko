@@ -1,0 +1,29 @@
+﻿<div id="message-dialog" class="dialog-modal">
+    <div class="dialog">
+        @*Шапка диалога*@
+        <div class="dialog-header">
+            <h3>Написать сообщение</h3>
+        </div>
+
+        @*Тело диалога*@
+        <div class="dialog-body">
+            <div id="response" class="response" hidden>
+                <input id="responseId" hidden />
+                <input id="responseType" hidden />
+                <div id="responseTitle" class="response-title"></div>
+                <div id="responseInfo" class="response-info"></div>
+                <div id="responseSubject" class="response-subject"></div>
+            </div>
+
+            <div class="form-group">
+                <textarea id="messageText" placeholder="Введите сообщение..." class="form-area"></textarea>
+            </div>
+        </div>
+
+        @*Подвал диалога*@
+        <div class="dialog-footer">
+            <button type="button" class="btn btn-add" onclick="{ hideDialog(); sendMessage('@Url.Action("SendAJAX")'); clearMessageDialog('#messageText', '#response'); }">Отправить</button>
+            <button type="button" class="btn btn-cancel" onclick="{ hideDialog(); clearMessageDialog('#messageText', '#response'); }">Отмена</button>
+        </div>
+    </div>
+</div>

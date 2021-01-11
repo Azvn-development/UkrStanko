@@ -1,0 +1,31 @@
+﻿<div class="main-controls">
+    <h3>@ViewBag.Title</h3>
+
+    <div class="actives">
+        @if (ViewBag.AddButton == true)
+        {
+            <a onclick="goToUrl(null, '@Url.Action("Create")'), false">
+                <i class="fa fa-plus-square fa-2x icon-add"></i>
+            </a>
+        } @* if *@
+
+        @if (ViewBag.Filters == true)
+        {
+            <a onclick="showDialog('#filter-dialog')"><i class="fa fa-filter fa-2x"></i></a>
+            @await Html.PartialAsync("~/Views/Shared/Dialogs/_AjaxFilterDialog.cshtml")
+        } @* if *@
+
+        @if (ViewBag.Messages == true)
+        {
+            <a onclick="showDialog('#message-dialog')"><i class="fa fa-envelope-square icon-default"></i></a>
+            @await Html.PartialAsync("~/Views/Shared/Dialogs/_AjaxMessageDialog.cshtml")
+        } @* if *@
+
+        @if (ViewBag.Search == true)
+        {
+            <input type="text" id="Search" placeholder="Поиск" class="search-field" autocomplete="off" onfocus='{ $(this).select() }' onkeyup="searchElements(event, '@Url.Action("SearchAJAX")')" />
+        } @* if *@
+
+        @await Html.PartialAsync("~/Views/Shared/Dialogs/_AjaxDeleteDialog.cshtml")
+    </div>
+</div>

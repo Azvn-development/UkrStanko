@@ -1,0 +1,31 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "provider": "unpkg",
+      "library": "@microsoft/signalr@3.1.8",
+      "destination": "wwwroot/js/libs/",
+      "files": [
+        "dist/browser/signalr.min.js",
+        "dist/browser/signalr.min.js.map"
+      ]
+    },
+    {
+      "library": "jquery-ajax-unobtrusive@3.2.6",
+      "destination": "wwwroot/js/libs/jquery-ajax-unobtrusive/"
+    },
+    {
+      "library": "fotorama@4.6.4",
+      "destination": "wwwroot/js/libs/fotorama/",
+      "files": [
+        "fotorama.css",
+        "fotorama.js",
+        "fotorama.min.css",
+        "fotorama.min.js",
+        "fotorama.png",
+        "fotorama@2x.png"
+      ]
+    }
+  ]
+}

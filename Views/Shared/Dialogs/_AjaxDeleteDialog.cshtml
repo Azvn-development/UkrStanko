@@ -1,0 +1,23 @@
+﻿<div id="delete-dialog" class="dialog-modal">
+    <div class="dialog">
+        @*Шапка диалога*@
+        <div class="dialog-header">
+            <h3>Удалить запись?</h3>
+        </div>
+
+        @*Тело диалога*@
+        <div class="dialog-body">
+            <p>
+                Вы действительно хотите безвозвратно удалить запись?
+                <br/>
+                Все связанные записи будут удалены из базы!!!!
+            </p>
+        </div>
+
+        @*Подвал диалога*@
+        <div class="dialog-footer">
+            <button name="dialog-delete-button" type="button" class="btn btn-cancel" onclick="{ hideDialog(); deleteElement(event, '@Url.Action("DeleteAJAX")') }">Удалить</button>
+            <button type="button" class="btn btn-default" onclick="hideDialog()">Отмена</button>
+        </div>
+    </div>
+</div>

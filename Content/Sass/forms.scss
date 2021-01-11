@@ -1,0 +1,225 @@
+﻿@import "variables.scss";
+
+/* СТИЛИЗАЦИЯ ФОРМ */
+.form {
+    width: 80%;
+    margin: 0 auto;
+}
+
+/*Стилизация группы label и input*/
+.form-group {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    padding: 0.8vh 0;
+}
+
+/* Стилизация блока с фотографией пользователя */
+.form-user-image {
+    display: flex;
+    justify-content:center;
+    align-items:center;
+    margin: 0 auto;
+    cursor: pointer;
+    border: 1px solid $dark_aqua_color;
+    background: $light_blue_color;
+    margin-bottom: 2vh;
+    padding: 1vh 1vw;
+    width: 300px;
+    height: 300px;
+
+    i {
+        display: none;
+    }
+}
+
+.form-user-image.active {
+    justify-content: flex-end;
+    align-items: flex-start;
+
+    h5 {
+        display: none;
+    }
+
+    i {
+        display: block;
+    }
+}
+
+/* Стилизация блока загрузки фото */
+.form-images-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 2vh;
+    padding-left: 35%;
+
+    h5 {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+
+    ul {
+        width: 100%;
+        margin-top: 1vh;
+
+        li {
+            display: flex;
+            margin-bottom: 0.5vh;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            height: 10vh;
+
+            img {
+                display: inline-block;
+                width: auto;
+                height: 100%;
+            }
+        }
+    }
+}
+
+/* Стилизация группы кнопок формы */
+.form-btn-group {
+    padding-top: 4vh;
+    text-align: right;
+}
+
+/* Стилизация label */
+.form-label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    font-weight: bold;
+    padding: 0.5vh 2vw;
+    width: 35%;
+}
+
+/* Стилизация input */
+.form-input {
+    border: none;
+    border-bottom: 1px solid $dark_aqua_color;
+    padding: 8px 1vw;
+    width: 65%;
+
+    &:active,
+    &:focus {
+        box-shadow: 0 1px $dark_aqua_color;
+    }
+
+    &.uppercase {
+        text-transform: uppercase;
+    }
+}
+
+/* Стилизация textarea */
+.form-area {
+    border: none;
+    border-bottom: 1px solid $dark_aqua_color;
+    padding: 8px 1vw;
+    width: 100%;
+    height: 200px;
+    resize: none;
+
+    &:active,
+    &:focus {
+        box-shadow: 0 1px $dark_aqua_color;
+    }
+}
+
+/* Стилизация checkbox */
+.form-checkbox {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+/* Стилизация выпадающего списка автозаполнения */
+.ui-autocomplete {
+    max-height: 400px;
+    overflow: hidden;
+}
+
+.ui-widget.ui-widget-content,
+.ui-widget-content {
+    border: 1px solid $aqua_color !important;
+}
+
+.ui-menu-item {
+    padding: 0.8vh 1vw;
+
+    &:hover {
+        background: $light_blue_color !important;
+    }
+}
+
+.ui-menu-item,
+.ui-state-active {
+    border: none !important;
+    background: none !important;
+    margin: 0 !important;
+    color: $dark_aqua_color !important;
+}
+
+/*Стилизация ошибок валидации*/
+.input-validation-error {
+    border-bottom: 1px solid $dark_red_color !important;
+
+    &:focus {
+        box-shadow: 0 1px $dark_red_color !important;
+    }
+}
+
+.validation-summary-errors {
+    padding: 1vh 1vw;
+    font-weight: bold;
+    color: $dark_red_color;
+}
+
+.field-validation-error {
+    display: inline-block;
+    padding-top: 0.5vh;
+    padding-left: 35%;
+    color: $dark_red_color !important;
+
+    span {
+        color: $dark_red_color;
+    }
+}
+
+
+/* АДАПТАЦИЯ К ШИРИНЕ ЭКРАНА МЕНЕЕ 1000 PX */
+@media(max-width:$tablet_width) {
+    .form {
+        width: 100%;
+    }
+
+    .form-user-image {
+        width: 200px;
+        height: 200px;
+    }
+
+    .form-images-group {
+        padding: 0;
+    }
+
+    .form-label {
+        display: none;
+    }
+
+    .form-input {
+        width: 100%;
+    }
+
+    .field-validation-error {
+        width: 100%;
+        padding-left: 1vw;
+    }
+
+    .ui-autocomplete {
+        max-height: 200px;
+        overflow: hidden;
+    }
+}

@@ -1,0 +1,8 @@
+﻿<script>
+    $.validator.unobtrusive.parse('.form');
+
+    $("#ConnectionId").val(sessionStorage.getItem("connectionId"));
+
+    machineTypesAutocomplete("#MachineType", "#Analogue", "#MachineTypeId", @Json.Serialize(Model.Machines), @Json.Serialize(Model.MachineTypes), @Model.Id)
+    analogsAutocomplete("#Analogue", "#MachineTypeId", @Json.Serialize(Model.Machines), '@Model.MachineType', @Model.Id)
+</script>

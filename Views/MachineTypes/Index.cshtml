@@ -1,0 +1,20 @@
+﻿@model UkrStanko.ViewModels.MachineTypes.IndexViewModel
+
+@{
+    ViewBag.Title = "Типы станков";
+
+    ViewBag.AddButton = true;
+    ViewBag.Search = true;
+}
+
+@await Html.PartialAsync("~/Views/Shared/_Controls.cshtml")
+
+<div class="data" id="data">
+    @await Html.PartialAsync("_Table", Model.MachineTypes)
+</div>
+
+<script>
+    $(window).scrollTop(0);
+
+    checkCurrentUrl('@Url.Action("Index")');
+</script>

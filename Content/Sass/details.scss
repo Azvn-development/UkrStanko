@@ -1,0 +1,38 @@
+﻿@import "variables.scss";
+
+/* СТИЛИЗАЦИЯ БЛОКА С ИНФОРМАЦИЕЙ */
+.details-table {
+    width: 100%;
+    margin-bottom: 2vh;
+    border-collapse: collapse;
+
+    tr:nth-child(2n+1) {
+        background: $light_blue_color;
+    }
+
+    th, td {
+        padding: 1vh 1vw;
+    }
+
+    th {
+        text-align: left;
+        width: 20%;
+    }
+
+    td {
+        width: 80%;
+    }
+}
+
+/* АДАПТАЦИЯ К ШИРИНЕ ЭКРАНА МЕНЕЕ 450 PX */
+@media(max-width:$mobile_width) {
+    .details-table {
+        th {
+            width: 35%;
+        }
+
+        td {
+            width: 65%;
+        }
+    }
+}
